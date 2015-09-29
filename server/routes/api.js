@@ -8,4 +8,12 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+//ROUTE 1 GET ALL STOCKS
+router.get('/stocks', function(req, res, next) {
+  Stock.findQ()
+    .then(function (result) {res.json(result)})
+    .catch(function (err) {res.send(err) })
+    .done();
+});
+
 module.exports = router;
