@@ -35,7 +35,6 @@ describe('Stocks', function() {
     chai.request(server)
     .get('/api/v1/stocks')
     .end(function(err, res) {
-      console.log(res.body);
       res.should.have.status(200);
       res.should.be.json;
       res.body.should.be.a('array');
@@ -50,5 +49,38 @@ describe('Stocks', function() {
       done();
     });
   });
+
+  //2. GET ONE STOCK TEST
+   it('should list a SINGLE stocks on /stock/<id> GET', function(done) {
+    var newStock = new Stock({
+      name: "Google",
+      ticker: "GOOGL",
+      exchange: "NASDAQ",
+      price: 623.00
+    });
+    newStock.save(function(err, data) {
+      chai.request(server)
+        .get('/api/v1/stock/'+data.id)
+        .end(function(err, res){
+          console.log(res.body);
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('object');
+          res.body.should.have.property('_id');
+          res.body.should.have.property('name');
+          res.body.should.have.property('ticker');
+          res.body.should.have.property('exchange');
+          res.body.should.have.property('price');
+          res.body.name.should.equal('Google');
+          res.body.ticker.should.equal('GOOGL');
+          res.body.exchange.should.equal('NASDAQ');
+          res.body.price.should.equal(623.00);
+          done();
+        });
+    });
+  });
+
+
+
 });
 
