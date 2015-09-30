@@ -62,7 +62,6 @@ describe('Stocks', function() {
       chai.request(server)
         .get('/api/v1/stock/'+data.id)
         .end(function(err, res){
-          console.log(res.body);
           res.should.have.status(200);
           res.should.be.json;
           res.body.should.be.a('object');
@@ -80,6 +79,28 @@ describe('Stocks', function() {
     });
   });
 
+  //3. POST STOCK REQUEST
+//3. POST Test
+  it('should add a SINGLE stock on /stocks POST', function(done) {
+  chai.request(server)
+    .post('/api/v1/stocks')
+    .send({'name': 'Amazon', 'ticker': 'AMZN', 'exchange' : 'NASDAQ', 'price': 505.00})
+    .end(function(err, res){
+      res.should.have.status(200);
+      res.should.be.json;
+      res.body.should.be.a('object');
+      console.log(res.body);
+      res.body.should.have.property('SUCCESS');
+      res.body.SUCCESS[0].should.have.property('name');
+      res.body.SUCCESS[0].should.have.property('ticker');
+      res.body.SUCCESS[0].should.have.property('exchange');
+      res.body.SUCCESS[0].should.have.property('_id');
+      res.body.SUCCESS[0].name.should.equal('Amazon');
+      res.body.SUCCESS[0].ticker.should.equal('AMZN');
+      res.body.SUCCESS[0].price.should.equal(505.00);
+      done();
+    });
+  });
 
 
 });

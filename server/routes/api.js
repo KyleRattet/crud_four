@@ -26,8 +26,18 @@ router.get('/stock/:id', function(req,res,next){
 
 //ROUTE 3 POST ALL STOCKS
 router.post('/stocks', function(req,res,next) {
-
-
+  newStock = new Stock ({
+    name: req.body.name,
+    ticker: req.body.ticker,
+    exchange: req.body.exchange,
+    price: req.body.price
+  });
+  newStock.saveQ()
+    .then(function (result) {
+                    res.json({"SUCCESS": result});
+                  })
+    .catch(function (err) {res.send(err)})
+    .done();
 });
 
 
