@@ -7,8 +7,76 @@
 
   <div class="container">
 
-    <h1>{{ title }}</h1>
-    <p>Welcome to {{ title }}</p>
+  <div class="add-stock">
+
+    <h1 class="text-center">Add a Stock</h1>
+
+    <form>
+      <div class="form-group">
+        <input type="text" class="form-control" id="name" placeholder="Enter the Company Name" required>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" id="ticker" placeholder="Enter the Ticker Name" required>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" id="exchange" placeholder="Enter the Exchange Listed" required>
+      </div>
+      <div class="form-group">
+        <input type="price" class="form-control" id="price" placeholder="Enter the Last Price" required>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Submit</button>
+    </form>
+
+  </div>
+
+  <br><hr>
+
+  <div class="message-section">
+    <p class="alert alert-info" role="alert" id="message"></p>
+  </div>
+
+  <div class="stock-section">
+    <h2 class="text-center"></h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Company Name</th>
+          <th>Ticker Symbol</th>
+          <th>Listed Exchange</th>
+          <th>Last Price</th>
+        </tr>
+      </thead>
+      <tbody id="all-stocks"></tbody>
+    </table>
+  </div>
+
+  <div class="edit-section">
+    <h2 class="text-center" id="edit-title">Edit Stock</h2>
+    <form method="post">
+      <div class="form-group">
+        <label>Company Name</label>
+        <input id="edit-name" type="text" name="name" class="form-control"  required>
+      </div>
+       <div class="form-group">
+        <label>Ticker Symbol</label>
+        <input id="edit-ticker" type="text" name="description" class="form-control" required>
+      </div>
+       <div class="form-group">
+        <label>Listed Exchange</label>
+        <input id="edit-exchange" type="text" name="tags" class="form-control"  required>
+      </div>
+       <div class="form-group">
+        <label>Last Price</label>
+        <input id="edit-price" type="text" name="tags" class="form-control"  required>
+      </div>
+      <button type="submit" class="btn btn-default update-button">Update Stock</button>
+    </form>
+
+    <br>
+
+
+
+  </div>
 
   </div>
 
