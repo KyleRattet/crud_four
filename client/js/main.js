@@ -4,11 +4,10 @@ $(document).on('ready', function() {
   getStocks();
 });
 
-
+//add new stock form submit
 $('form').on('submit', function (e) {
   e.preventDefault();
-  console.log("test");
-
+  $('#mesage').html('');
   //create the payload
   var payload = {
     name: $('#name').val(),
@@ -16,19 +15,75 @@ $('form').on('submit', function (e) {
     exchange: $('#exchange').val(),
     price: $('#price').val()
   };
-
   //post request to the server
   $.post('/api/v1/stocks', payload, function(data){
     console.log(data);
     console.log(payload);
-
-
+    $('.message-section').show();
+    $('#message').html('New stock Added.');
+    getStocks();
   });
+});
 
-  getStocks();
+//delete
+$(document).on('click', '.delete-button', function() {
+  $.ajax({
+    method: "DELETE",
+    url: '/api/v1/stock/'+$(this).attr('id')
+  }).done(function(data) {
+    $("#all-stocks").html("");
+    $('#message').html('Stock deleted successfully.');
+    getStocks();
+  });
 });
 
 
+//edit stock functionality
+$(document).on('click', '.edit-button', function() {
+
+  $.get('/api/v1/stock/'+$(this).attr('id'), function(data) {
+    $('#edit-title').html('Edit '+data.name);
+    $('#edit-name').val(data.name);
+    $('#edit-ticker').val(data.ticker);
+    $('#edit-exchange').val(data.exchange);
+    $('#edit-price').val(data.price);
+    $('.update-button').attr('id', data._id);
+  });
+
+  $('.edit-section').show();
+  $('#all-stocks').hide();
+
+});
+
+//update button after editing
+$(document).on('click', '.update-button', function(e) {
+  e.preventDefault();
+  //grabbing the form inputs
+  var $updatedStockName = $('#edit-name').val();
+  var $updatedStockTicker = $('#edit-ticker').val();
+  var $updatedStockExchange = $('#edit-exchange').val();
+  var $updatedStockPrice = $('#edit-price').val();
+
+  //create the payload to send in the correct schema
+  var payload = {
+    name: $updatedStockName,
+    ticker: $updatedStockTicker,
+    exchange: $updatedStockExchange,
+    price: $updatedStockPrice
+  };
+
+  $.ajax({
+    method: "PUT",
+    url: '/api/v1/stock/' + $(this).attr('id'),
+    data: payload
+  }).done(function(data) {
+    $("#all-stocks").html("");
+    getStocks();
+    $('.edit-section').hide();
+    $('#all-stocks').show();
+  });
+
+});
 
 
 //helper function to render all of the stocks
