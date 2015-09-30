@@ -80,7 +80,6 @@ describe('Stocks', function() {
   });
 
   //3. POST STOCK REQUEST
-//3. POST Test
   it('should add a SINGLE stock on /stocks POST', function(done) {
   chai.request(server)
     .post('/api/v1/stocks')
@@ -89,7 +88,6 @@ describe('Stocks', function() {
       res.should.have.status(200);
       res.should.be.json;
       res.body.should.be.a('object');
-      console.log(res.body);
       res.body.should.have.property('SUCCESS');
       res.body.SUCCESS[0].should.have.property('name');
       res.body.SUCCESS[0].should.have.property('ticker');
@@ -101,6 +99,35 @@ describe('Stocks', function() {
       done();
     });
   });
+
+  //4. PUT STOCK
+    it("should update a single stock on /stock PUT", function(done){
+  chai.request(server)
+    .get('/api/v1/stocks')
+    .end(function(err, res){
+      chai.request(server)
+        .put('/api/v1/stock/'+res.body[0]._id)
+        .send({
+          name: "Apple Inc.",
+          ticker: "AAPL",
+          exchange: "NASDAQ",
+          price: 112.00
+          })
+        .end(function(error, response){
+          response.should.have.status(200);
+          response.should.be.json;
+          response.body.should.be.a('object');
+          response.body.should.have.property('UPDATED');
+          response.body.UPDATED.should.be.a('object');
+          response.body.UPDATED.should.have.property('name');
+          response.body.UPDATED.should.have.property('_id');
+          response.body.UPDATED.name.should.equal('Apple Inc.');
+          response.body.UPDATED.price.should.equal(112.00);
+          done();
+      });
+    });
+  });
+
 
 
 });

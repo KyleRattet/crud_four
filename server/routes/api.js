@@ -42,6 +42,21 @@ router.post('/stocks', function(req,res,next) {
 
 
 //ROUTE 4 PUT ONE STOCK
+router.put('/stock/:id', function(req,res,next){
+  var update = {
+    name: req.body.name,
+    ticker: req.body.ticker,
+    exchange: req.body.exchange,
+    price: req.body.price
+  };
+  var options = {new:true};
+  Stock.findByIdAndUpdateQ(req.params.id, update, options)
+  .then(function (result) {
+                          res.json({"UPDATED": result});
+                          })
+  .catch(function (err) {res.send(err) })
+  .done();
+});
 
 
 //ROUTE 5 DELETE ONE STOCK
