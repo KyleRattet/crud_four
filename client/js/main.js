@@ -2,6 +2,8 @@
 
 $(document).on('ready', function() {
   getStocks();
+  $('.edit-section').hide();
+  $('.message-section').hide();
 });
 
 //add new stock form submit
@@ -17,8 +19,6 @@ $('form').on('submit', function (e) {
   };
   //post request to the server
   $.post('/api/v1/stocks', payload, function(data){
-    console.log(data);
-    console.log(payload);
     $('.message-section').show();
     $('#message').html('New stock Added.');
     getStocks();
@@ -79,6 +79,7 @@ $(document).on('click', '.update-button', function(e) {
   }).done(function(data) {
     $("#all-stocks").html("");
     getStocks();
+    $('#message').html('Stock edited successfully.');
     $('.edit-section').hide();
     $('#all-stocks').show();
   });
