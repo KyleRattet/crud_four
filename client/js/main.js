@@ -7,7 +7,7 @@ $(document).on('ready', function() {
 });
 
 //add new stock form submit
-$('form').on('submit', function (e) {
+$('stockform').on('submit', function (e) {
   e.preventDefault();
   $('#mesage').html('');
   //create the payload
