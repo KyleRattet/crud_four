@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+{% block title %}{% endblock %}
+{% block content %}
+
+  <div class="container">
+
+    <h1>{{ title }}</h1>
+    <p>Welcome to {{ title }}</p>
+
+    {% if !user %}
+      <a href="/login">Login</a>
+      <br>
+      <a href="/register">Register</a>
+    {% endif %}
+    {% if user %}
+      <p>You are currently logged in as <strong>{{ user.username }}</strong></p>
+      <a href="/logout">Logout</a>
+    {% endif %}
+
+  </div>
+
+{% endblock %}
