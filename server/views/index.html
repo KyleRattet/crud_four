@@ -7,11 +7,23 @@
 
   <div class="container">
 
+    {% if user %}
+
+    <p>Welcome, {{user.username}}</p>
+    <a href="/logout">Logout</a>
+
+
+  {% else %}
+
+    <a href="/register">Register</a> or <a href="/login">Login</a>
+
+  {% endif %}
+
   <div class="add-stock">
 
     <h1 class="text-center">Add a Stock</h1>
 
-    <form>
+    <form id='stock-form'>
       <div class="form-group">
         <input type="text" class="form-control" id="name" placeholder="Enter the Company Name" required>
       </div>
